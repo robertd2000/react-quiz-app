@@ -18,11 +18,11 @@ const EndGameItem = () => {
     dispatch(newGame(true))
   }
   return (
-    <Card sx={{ maxWidth: 345, margin: '50px auto' }}>
+    <Card sx={{ maxWidth: 445, margin: '50px auto' }}>
       <CardMedia
         component="img"
         alt="green iguana"
-        height="140"
+        height="200"
         image="./assets/congrads.jpg"
       />
       <CardContent>

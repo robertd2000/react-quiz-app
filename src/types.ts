@@ -1,15 +1,15 @@
 export type questionType = {
-  text: String
-  img: String | any
-  answers: String[]
-  right: Number
-  id: Number
+  text: string
+  img: string | any
+  answers: string[]
+  right: number
+  id: number
 }
 
 export type categoryType = {
   name: any
-  type: String
-  id: Number
+  type: string
+  id: number
 }
 
 export type InitialStateType = {
@@ -23,6 +23,9 @@ export type InitialStateType = {
   score: number
   isStarted: Boolean
   isEnded: Boolean
+  gameType: string
+  longGame: number
+  accessableCategories: categoryType[]
 }
 
 export type RootApp = {

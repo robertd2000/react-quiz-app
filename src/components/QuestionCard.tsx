@@ -16,11 +16,11 @@ type QuestionCardType = {
 const QuestionCard: React.FC<QuestionCardType> = ({ data }) => {
   const { text, id, img, right, answers } = data
   return (
-    <Card sx={{ maxWidth: 345, margin: '20px auto' }}>
+    <Card sx={{ maxWidth: 545, margin: '20px auto' }}>
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height="340"
           image={img}
           alt="green iguana"
         />
@@ -28,6 +28,7 @@ const QuestionCard: React.FC<QuestionCardType> = ({ data }) => {
           <Typography gutterBottom variant="h5" component="div">
             {text}
           </Typography>
+          <hr />
           <Typography variant="body2" color="text.secondary">
             <AnswerItem answers={answers} />
           </Typography>

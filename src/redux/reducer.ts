@@ -77,6 +77,36 @@ const initialState = {
         id: 5,
       },
     ],
+    myphes: [
+      {
+        text: 'Как звали коня Сосруко?',
+        answers: ['Шхьоуей', 'Боцык', 'Тхожей', 'Армес'],
+        img: './assets/sosruko.jpg',
+        right: 2,
+        id: 1,
+      },
+      {
+        text: 'Какой герой нартского эпоса погиб от стрелы?',
+        img: './assets/badinoko.jpg',
+        answers: ['Бадыноко', 'Ашамаз', 'Сосруко', 'Бэтэрэз'],
+        right: 0,
+        id: 2,
+      },
+      {
+        text: 'Что означает имя Кухулин?',
+        answers: ['Бык Кулана', 'Лев Кулана', 'Пес Кулана', 'Орел Кулана'],
+        right: 2,
+        id: 3,
+        img: './assets/Cuinbattle.jpg',
+      },
+      {
+        text: 'Сколько подвигов совершил Геракл?',
+        answers: ['13 подвигов', '12 подвигов', '3 подвига', '1 подвиг'],
+        right: 1,
+        id: 4,
+        img: './assets/12-1.jpg',
+      },
+    ],
   },
   currentQuestions: [],
   currentQues: 0,
@@ -84,19 +114,29 @@ const initialState = {
   categories: [
     { name: 'История', type: 'history', id: 1 },
     { name: 'Программирование', type: 'programming', id: 2 },
+    { name: 'Мифы и легенды', type: 'myphes', id: 3 },
   ],
   score: 0,
   isStarted: false,
   isEnded: false,
+  gameType: 'short',
+  longGame: 1,
+  accessableCategories: [
+    { name: 'История', type: 'history', id: 1 },
+    { name: 'Программирование', type: 'programming', id: 2 },
+    { name: 'Мифы и легенды', type: 'myphes', id: 3 },
+  ],
 }
 
 const newQuestions = (arr: any) => {
   const newArr: any = []
+  if (arr.length <= 3) {
+    return arr
+  }
   while (newArr.length !== 3) {
     let j = Math.round(Math.random() * arr.length - 1)
     if (!newArr.includes(arr[j]) && j > 0) {
       newArr.push(arr[j])
-      console.log(j)
     }
     if (j in newArr) {
       continue
@@ -106,6 +146,29 @@ const newQuestions = (arr: any) => {
   return newArr
 }
 
+const endGame = (state: InitialStateType) => {
+  if (state.currentQues === 3 && state.gameType === 'short') {
+    state.isStarted = false
+    state.isEnded = true
+    state.currentQues = 0
+    state.accessableCategories = state.categories
+  }
+}
+
+const endLongGame = (state: InitialStateType) => {
+  if (state.currentQues === 3 && state.gameType === 'long') {
+    state.isStarted = false
+    state.isEnded = false
+    state.currentQues = 0
+    console.log(state.longGame)
+    if (state.longGame >= 3) {
+      state.isEnded = true
+      state.accessableCategories = state.categories
+    }
+    state.longGame += 1
+  }
+}
+
 const TestSlice = createSlice({
   name: 'test',
   initialState: initialState as InitialStateType,
@@ -113,16 +176,32 @@ const TestSlice = createSlice({
     startGame(state, action) {
       const type: string = action.payload
       state.currentQuestions = newQuestions(state.questions[type])
+      state.accessableCategories = state.accessableCategories.filter(
+        (i) => i.type !== type
+      )
       state.isStarted = true
     },
     nextQuestion(state, action) {
       state.currentQues = state.currentQues + 1
-
-      if (state.currentQues === 3) {
-        state.isStarted = false
-        state.isEnded = true
-        state.currentQues = 0
-      }
+      endGame(state)
+      // if (state.currentQues === 3 && state.gameType === 'short') {
+      //   state.isStarted = false
+      //   state.isEnded = true
+      //   state.currentQues = 0
+      //   state.accessableCategories = state.categories
+      // }
+      endLongGame(state)
+      // if (state.currentQues === 3 && state.gameType === 'long') {
+      //   state.isStarted = false
+      //   state.isEnded = false
+      //   state.currentQues = 0
+      //   console.log(state.longGame)
+      //   if (state.longGame >= 3) {
+      //     state.isEnded = true
+      //     state.accessableCategories = state.categories
+      //   }
+      //   state.longGame += 1
+      // }
 
       if (
         state.currentQuestions[action.payload.question].right ===
@@ -136,8 +215,12 @@ const TestSlice = createSlice({
       state.score = 0
       state.currentQues = 0
     },
+    selectGameType(state, action) {
+      state.gameType = action.payload
+    },
   },
 })
 
-export const { startGame, nextQuestion, newGame } = TestSlice.actions
+export const { startGame, nextQuestion, newGame, selectGameType } =
+  TestSlice.actions
 export default TestSlice.reducer

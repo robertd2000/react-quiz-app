@@ -21,7 +21,6 @@ const AnswerItem: React.FC<AnswerItemType> = ({ answers }) => {
   const clickHandler = (i: number) => {
     dispatch(nextQuestion({ question, i }))
   }
-  console.log(question)
 
   return (
     <FormControl component="fieldset">

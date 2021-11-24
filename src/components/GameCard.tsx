@@ -6,7 +6,6 @@ import QuestionCard from './QuestionCard'
 const GameCard = ({ questions }: any) => {
   const question = useSelector((state: RootApp) => state.reducer.currentQues)
   //
-  console.log(questions)
 
   return (
     <div style={{ margin: '0 auto' }}>

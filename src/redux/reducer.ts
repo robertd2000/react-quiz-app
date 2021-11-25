@@ -160,7 +160,6 @@ const endLongGame = (state: InitialStateType) => {
     state.isStarted = false
     state.isEnded = false
     state.currentQues = 0
-    console.log(state.longGame)
     if (state.longGame >= 3) {
       state.isEnded = true
       state.accessableCategories = state.categories
@@ -184,24 +183,7 @@ const TestSlice = createSlice({
     nextQuestion(state, action) {
       state.currentQues = state.currentQues + 1
       endGame(state)
-      // if (state.currentQues === 3 && state.gameType === 'short') {
-      //   state.isStarted = false
-      //   state.isEnded = true
-      //   state.currentQues = 0
-      //   state.accessableCategories = state.categories
-      // }
       endLongGame(state)
-      // if (state.currentQues === 3 && state.gameType === 'long') {
-      //   state.isStarted = false
-      //   state.isEnded = false
-      //   state.currentQues = 0
-      //   console.log(state.longGame)
-      //   if (state.longGame >= 3) {
-      //     state.isEnded = true
-      //     state.accessableCategories = state.categories
-      //   }
-      //   state.longGame += 1
-      // }
 
       if (
         state.currentQuestions[action.payload.question].right ===

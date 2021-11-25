@@ -13,9 +13,6 @@ export type categoryType = {
 }
 
 export type InitialStateType = {
-  //   questions: {
-  //     history: questionType[]
-  //   }
   questions: any
   currentQuestions: Array<questionType>
   currentQues: number

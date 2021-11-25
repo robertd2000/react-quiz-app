@@ -5,7 +5,6 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material'
-import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectGameType, startGame } from '../redux/reducer'
 import { RootApp } from '../types'
@@ -25,7 +24,6 @@ const StartPage = () => {
   const isStarted = useSelector((state: RootApp) => state.reducer.isStarted)
   const isEnded = useSelector((state: RootApp) => state.reducer.isEnded)
   const longGameIter = useSelector((state: RootApp) => state.reducer.longGame)
-
   const dispatch = useDispatch()
   const handler = (type: String) => {
     dispatch(startGame(type))
@@ -57,18 +55,17 @@ const StartPage = () => {
             {longGameIter <= 1 && (
               <Grid item xs={12}>
                 <RadioGroup
-                  defaultValue={gameType}
+                  value={gameType}
                   row
                   name="radio-buttons-group"
+                  onChange={selectType}
                 >
                   <FormControlLabel
-                    onClick={selectType}
                     label="короткая"
                     control={<Radio />}
                     value="short"
                   />
                   <FormControlLabel
-                    onClick={selectType}
                     label="длинная"
                     control={<Radio />}
                     value="long"
